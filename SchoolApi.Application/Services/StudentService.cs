@@ -8,16 +8,13 @@ using SchoolApi.Domain.Models;
 namespace SchoolApi.Application.Services
 {
     public class StudentService:IStudentServie
-    {
-        private readonly ILogger _logger;   
+    {        
         private readonly IGenericRepositoryAsync<Student> _studentRepository;
         private readonly IMapper _mapper;
 
-        public StudentService(IGenericRepositoryAsync<Student> studentRepository,
-            IMapper mapper, ILogger<StudentService> logger)
+        public StudentService(IGenericRepositoryAsync<Student> studentRepository,IMapper mapper)
         {
-            _mapper = mapper;
-            _logger = logger;
+            _mapper = mapper;           
             _studentRepository = studentRepository;
         }
         /// <summary>

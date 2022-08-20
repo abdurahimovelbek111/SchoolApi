@@ -1,15 +1,16 @@
-﻿using SchoolApi.Domain.Models;
+﻿using SchoolApi.Application.DTOs.Teacher;
+using SchoolApi.Domain.Models;
 
 namespace SchoolApi.Application.Interfaces
 {
     public interface ITeacherServise
     {
-        Task<IReadOnlyList<Teacher>> GetAllTeacherAsync();
+        Task<IReadOnlyList<TeacherDto>> GetAllTeacherAsync();
 
-        Task<Teacher> GetTeacherByIdAsync(int id);
+        Task<TeacherDto> GetTeacherByIdAsync(int id);
 
-        Task<Teacher> AddTeacherAsync(Teacher teacher);
-        Task UpdateTeacherAsync(Teacher teacher);
-        Task DeleteTeacherAsync(Teacher teacher);
+        Task<TeacherDto> AddTeacherAsync(TeacherForCreationDto teacherForCreationDto);
+        Task UpdateTeacherAsync(TeacherForCreationDto teacherForCreationDto);
+        Task DeleteTeacherAsync(TeacherForCreationDto teacherForCreationDto);
     }
 }

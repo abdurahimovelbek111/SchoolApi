@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SchoolApi.Application.DTOs.Student;
+using SchoolApi.Application.DTOs.Teacher;
 using SchoolApi.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,15 @@ namespace SchoolApi.Application.Profiles
     {
         public MappingInitializer()
         {
+          /* StudentDto->Student ga
+             Student->StudentDto ga  */
             CreateMap<StudentDto, Student>().ReverseMap();
             CreateMap<StudentForCreationDto, Student>().ReverseMap();
+
+            /* StudentDto->Student ga
+            Student->StudentDto ga */
+            CreateMap<TeacherDto, Teacher>().ReverseMap();
+            CreateMap<TeacherForCreationDto, Teacher>().ReverseMap();
         }
     }
 }
