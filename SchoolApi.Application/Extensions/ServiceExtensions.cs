@@ -12,6 +12,7 @@ namespace SchoolApi.Application.Extensions
             services.AddAutoMapper(typeof(MappingInitializer));
             services.AddTransient<IStudentServie, StudentService>();
             services.AddTransient<ITeacherServise,TeacherServise>();
+            services.AddTransient<IGroupService, GruopService>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SchoolApi.Application.DTOs.Group;
 using SchoolApi.Application.DTOs.Student;
 using SchoolApi.Application.DTOs.Teacher;
 using SchoolApi.Domain.Models;
@@ -19,10 +20,14 @@ namespace SchoolApi.Application.Profiles
             CreateMap<StudentDto, Student>().ReverseMap();
             CreateMap<StudentForCreationDto, Student>().ReverseMap();
 
-            /* StudentDto->Student ga
-            Student->StudentDto ga */
+            /* TeacherDto->Teacher ga
+            Teacher->TeacherDto ga */
             CreateMap<TeacherDto, Teacher>().ReverseMap();
             CreateMap<TeacherForCreationDto, Teacher>().ReverseMap();
+            /* GroupDto->Group ga
+            Group->GroupDto ga */
+            CreateMap<GroupDto, Group>().ReverseMap();
+            CreateMap<GroupForCreationDto, Group>().ReverseMap();
         }
     }
 }

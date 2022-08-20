@@ -1,15 +1,16 @@
-﻿using SchoolApi.Domain.Models;
+﻿using SchoolApi.Application.DTOs.Group;
+using SchoolApi.Domain.Models;
 
 namespace SchoolApi.Application.Interfaces
 {
     public interface IGroupService
     {
-        Task<IReadOnlyList<Group>> GetAllGroupAsync();
+        Task<IReadOnlyList<GroupDto>> GetAllGroupAsync();
 
-        Task<Group> GetGroupByIdAsync(int id);
+        Task<GroupDto> GetGroupByIdAsync(int id);
 
-        Task<Group> AddGroupAsync(Group group);
-        Task UpdateGroupAsync(Group group);
-        Task DeleteGroupAsync(Group group);
+        Task<GroupDto> AddGroupAsync(GroupForCreationDto groupForCreationDto);
+        Task UpdateGroupAsync(GroupForCreationDto groupForCreationDto);
+        Task DeleteGroupAsync(GroupForCreationDto groupForCreationDto);
     }
 }
