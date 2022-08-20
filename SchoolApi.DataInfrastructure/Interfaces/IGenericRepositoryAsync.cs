@@ -8,7 +8,7 @@ namespace SchoolApi.DataInfrastructure.Interfaces
 {
     public interface IGenericRepositoryAsync<T> 
         where T : class
-    {
+    {        
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> GetAllAsync();
         Task<IReadOnlyList<T>> GetPageListAsync(int pageNumbers, int pageSize);

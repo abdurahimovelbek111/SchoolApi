@@ -14,6 +14,7 @@ namespace SchoolApi.DataInfrastructure.Repositories
             _dbContext = dbContext;
         }
 
+
         public virtual async Task<T> AddAsync(T entity)
         {
             await _dbContext.Set<T>().AddAsync(entity);
@@ -26,7 +27,7 @@ namespace SchoolApi.DataInfrastructure.Repositories
             _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
-
+        
         public virtual async Task<IReadOnlyList<T>> GetAllAsync()
         {
             return await _dbContext.Set<T>().ToListAsync();
@@ -36,7 +37,7 @@ namespace SchoolApi.DataInfrastructure.Repositories
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
-
+       
         public virtual async Task<IReadOnlyList<T>> GetPageListAsync(int pageNumbers, int pageSize)
         {
             return await _dbContext.Set<T>()

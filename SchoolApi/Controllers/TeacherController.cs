@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SchoolApi.Application.Interfaces;
-using SchoolApi.Application.Services;
 using SchoolApi.Domain.Models;
 
 namespace SchoolApi.Controllers
@@ -27,7 +25,7 @@ namespace SchoolApi.Controllers
             return Ok(await _teacherServie.GetTeacherByIdAsync(id));
         }
 
-        [HttpPost()]
+        [HttpPost]
         public async Task<IActionResult> AddTeacherAsync([FromBody] Teacher teacher)
         {
             return Created("", await _teacherServie.AddTeacherAsync(teacher));

@@ -1,15 +1,15 @@
-﻿using SchoolApi.Domain.Models;
+﻿using SchoolApi.Application.DTOs.Student;
 
 namespace SchoolApi.Application.Interfaces
 {
     public interface IStudentServie
     {
-        Task<IReadOnlyList<Student>> GetAllStudentAsync();
+        Task<IReadOnlyList<StudentDto>> GetAllStudentAsync();
 
-        Task<Student> GetStudentByIdAsync(int id);
+        Task<StudentDto> GetStudentByIdAsync(int id);
 
-        Task<Student> AddStudentAsync(Student student);
-        Task UpdateStudentAsync(Student student);
-        Task DeleteStudentAsync(Student student);
+        Task<StudentDto> AddStudentAsync(StudentForCreationDto studentFotCreatioDto);
+        Task UpdateStudentAsync(StudentForCreationDto studentForCreationDto);
+        Task DeleteStudentAsync(StudentForCreationDto studentForCreationDto);
     }
 }

@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace SchoolApi.Domain.Models
 {
     public class Group:BaseEntity
-    {
-        
+    {        
         public string GroupName { get; set; }
         public Group()
         {

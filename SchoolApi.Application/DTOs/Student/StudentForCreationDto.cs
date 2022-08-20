@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SchoolApi.Domain.Models
+﻿namespace SchoolApi.Application.DTOs.Student
 {
-    public class Student: BaseEntity
+    public class StudentForCreationDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

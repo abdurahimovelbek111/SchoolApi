@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using SchoolApi.Application.DTOs.Student;
 using SchoolApi.Application.Interfaces;
-using SchoolApi.Domain.Models;
 
 namespace SchoolApi.Controllers
 {
@@ -27,14 +26,14 @@ namespace SchoolApi.Controllers
         }
 
         [HttpPost()]
-        public async Task<IActionResult> AddStudentAsync([FromBody] Student student)
+        public async Task<IActionResult> AddStudentAsync([FromBody] StudentForCreationDto studentForCreationDto)
         {
-            return Created("", await _studentServie.AddStudentAsync(student));
+            return Created("", await _studentServie.AddStudentAsync(studentForCreationDto));
         }
         [HttpPatch]
-        public async Task UpdateStudentAsync([FromBody] Student student)
+        public async Task UpdateStudentAsync([FromBody] StudentForCreationDto studentForCreationDto)
         {
-            await _studentServie.UpdateStudentAsync(student);   
+            await _studentServie.UpdateStudentAsync(studentForCreationDto);   
         }
         [HttpDelete("{id}")]
         public async Task DeleteStudentAsync(int id)
