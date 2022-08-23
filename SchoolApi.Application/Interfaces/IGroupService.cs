@@ -10,7 +10,7 @@ namespace SchoolApi.Application.Interfaces
         Task<GroupDto> GetGroupByIdAsync(int id);
 
         Task<GroupDto> AddGroupAsync(GroupForCreationDto groupForCreationDto);
-        Task UpdateGroupAsync(GroupForCreationDto groupForCreationDto);
-        Task DeleteGroupAsync(GroupForCreationDto groupForCreationDto);
+        Task UpdateGroupAsync(GroupUpdate groupUpdate);
+        Task DeleteGroupAsync(int id);
     }
 }

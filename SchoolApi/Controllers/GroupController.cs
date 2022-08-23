@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolApi.Application.DTOs.Group;
 using SchoolApi.Application.Interfaces;
+using SchoolApi.Domain.Models;
 
 namespace SchoolApi.Controllers
 {
@@ -32,15 +33,14 @@ namespace SchoolApi.Controllers
             return Created("", await _groupService.AddGroupAsync(groupForCreationDto));
         }
         [HttpPatch]
-        public async Task UpdateStudentAsync([FromBody] GroupForCreationDto groupForCreationDto)
+        public async Task UpdateStudentAsync([FromBody] GroupUpdate groupUpdate)
         {
-            await _groupService.UpdateGroupAsync(groupForCreationDto);
+            await _groupService.UpdateGroupAsync(groupUpdate);
         }
         [HttpDelete("{id}")]
         public async Task DeleteStudentAsync(int id)
-        {
-            var student = await _groupService.GetGroupByIdAsync(id);
-            await _groupService.DeleteGroupAsync(student);
+        {           
+            await _groupService.DeleteGroupAsync(id);
         }
     }
 }

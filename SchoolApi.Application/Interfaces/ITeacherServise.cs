@@ -10,7 +10,7 @@ namespace SchoolApi.Application.Interfaces
         Task<TeacherDto> GetTeacherByIdAsync(int id);
 
         Task<TeacherDto> AddTeacherAsync(TeacherForCreationDto teacherForCreationDto);
-        Task UpdateTeacherAsync(TeacherForCreationDto teacherForCreationDto);
-        Task DeleteTeacherAsync(TeacherForCreationDto teacherForCreationDto);
+        Task UpdateTeacherAsync(TeacherUpdate teacherUpdate);
+        Task DeleteTeacherAsync(int id);
     }
 }

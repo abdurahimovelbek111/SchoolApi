@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SchoolApi.Application.DTOs.Group;
 using SchoolApi.Application.Interfaces;
+using SchoolApi.DataInfrastructure.Context;
 using SchoolApi.DataInfrastructure.Interfaces;
 using SchoolApi.Domain.Models;
 
@@ -10,28 +11,14 @@ namespace SchoolApi.Application.Services
     {
         private readonly IGenericRepositoryAsync<Group> _gruopRepository;
         private readonly IMapper _mapper;
-
+        private readonly ApplicationDbContext _db;
         public GruopService(IGenericRepositoryAsync<Group> gruopRepository , IMapper mapper)
         {
             _gruopRepository = gruopRepository;
             _mapper = mapper;
         }
         public async Task<GroupDto> AddGroupAsync(GroupForCreationDto groupForCreationDto)
-        {
-            #region DTO
-            /* // this DTO model map entity
-             var group = _mapper.Map<Group>(groupForCreationDto);
-             // if Id==0 Add from DB else Update entity
-             if (group.Id == 0)
-             {
-                 await _gruopRepository.AddAsync(group);
-             }
-             else
-             {
-                 await _gruopRepository.UpdateAsync(group);
-             }
-             return _mapper.Map<GroupDto>(group);*/
-            #endregion
+        {       
             var group = _mapper.Map<Group>(groupForCreationDto);
             return _mapper.Map<GroupDto>(await _gruopRepository.AddAsync(group));
         }
@@ -46,15 +33,14 @@ namespace SchoolApi.Application.Services
             return _mapper.Map<GroupDto>(await _gruopRepository.GetByIdAsync(id));
         }
 
-        public async Task UpdateGroupAsync(GroupForCreationDto groupForCreationDto)
-        {
-            var group = _mapper.Map<Group>(groupForCreationDto);
+        public async Task UpdateGroupAsync(GroupUpdate groupUpdate)
+        {         
+            var group=_mapper.Map<Group>(groupUpdate);
             await _gruopRepository.UpdateAsync(group);
         }
-        public async Task DeleteGroupAsync(GroupForCreationDto groupForCreationDto)
-        {
-            var group = _mapper.Map<Group>(groupForCreationDto);
-            await _gruopRepository.DeleteAsync(group);
+        public async Task DeleteGroupAsync(int id)
+        {          
+            await _gruopRepository.DeleteAsync(await _gruopRepository.GetByIdAsync(id));
         }
     }
 }

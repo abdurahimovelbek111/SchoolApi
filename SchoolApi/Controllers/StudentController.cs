@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SchoolApi.Application.DTOs.Student;
 using SchoolApi.Application.Interfaces;
+using SchoolApi.Domain.Models;
 
 namespace SchoolApi.Controllers
 {
@@ -31,15 +32,14 @@ namespace SchoolApi.Controllers
             return Created("", await _studentServie.AddStudentAsync(studentForCreationDto));
         }
         [HttpPatch]
-        public async Task UpdateStudentAsync([FromBody] StudentForCreationDto studentForCreationDto)
+        public async Task UpdateStudentAsync([FromBody] StudentUpdate studentUpdate)
         {
-            await _studentServie.UpdateStudentAsync(studentForCreationDto);   
+            await _studentServie.UpdateStudentAsync(studentUpdate);   
         }
         [HttpDelete("{id}")]
         public async Task DeleteStudentAsync(int id)
         {
-            var student = await _studentServie.GetStudentByIdAsync(id);
-            await _studentServie.DeleteStudentAsync(student);            
+           await _studentServie.DeleteStudentAsync(id);            
         }
     }
 }

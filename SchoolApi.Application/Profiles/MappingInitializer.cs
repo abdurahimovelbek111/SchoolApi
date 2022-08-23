@@ -19,15 +19,17 @@ namespace SchoolApi.Application.Profiles
              Student->StudentDto ga  */
             CreateMap<StudentDto, Student>().ReverseMap();
             CreateMap<StudentForCreationDto, Student>().ReverseMap();
-
+            CreateMap<StudentUpdate,Student>().ReverseMap();
             /* TeacherDto->Teacher ga
             Teacher->TeacherDto ga */
             CreateMap<TeacherDto, Teacher>().ReverseMap();
             CreateMap<TeacherForCreationDto, Teacher>().ReverseMap();
+            CreateMap<TeacherUpdate, Teacher>().ReverseMap();
             /* GroupDto->Group ga
             Group->GroupDto ga */
             CreateMap<GroupDto, Group>().ReverseMap();
             CreateMap<GroupForCreationDto, Group>().ReverseMap();
+            CreateMap<GroupUpdate, Group>().ReverseMap();
         }
     }
 }

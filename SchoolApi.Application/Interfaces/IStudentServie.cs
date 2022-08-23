@@ -1,4 +1,5 @@
 ﻿using SchoolApi.Application.DTOs.Student;
+using SchoolApi.Domain.Models;
 
 namespace SchoolApi.Application.Interfaces
 {
@@ -9,7 +10,7 @@ namespace SchoolApi.Application.Interfaces
         Task<StudentDto> GetStudentByIdAsync(int id);
 
         Task<StudentDto> AddStudentAsync(StudentForCreationDto studentFotCreatioDto);
-        Task UpdateStudentAsync(StudentForCreationDto studentForCreationDto);
-        Task DeleteStudentAsync(StudentForCreationDto studentForCreationDto);
+        Task UpdateStudentAsync(StudentUpdate studentUpdate);
+        Task DeleteStudentAsync(int id);
     }
 }

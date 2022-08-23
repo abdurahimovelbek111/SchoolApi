@@ -54,15 +54,14 @@ namespace SchoolApi.Application.Services
             return _mapper.Map<StudentDto>(await _studentRepository.GetByIdAsync(id));
         }
 
-        public async Task UpdateStudentAsync(StudentForCreationDto studentForCreationDto)
-        {
-            var student=_mapper.Map<Student>(studentForCreationDto);
-            await _studentRepository.UpdateAsync(student);
+        public async Task UpdateStudentAsync(StudentUpdate studentUpdate)
+        {        
+            var student=_mapper.Map<Student>(studentUpdate);
+            await  _studentRepository.UpdateAsync(student);
         }
-        public async Task DeleteStudentAsync(StudentForCreationDto studentForCreationDto)
-        {
-            var student = _mapper.Map<Student>(studentForCreationDto);
-            await _studentRepository.DeleteAsync(student);
+        public async Task DeleteStudentAsync(int id)
+        {          
+           await  _studentRepository.DeleteAsync(await _studentRepository.GetByIdAsync(id));
         }
     }
 }

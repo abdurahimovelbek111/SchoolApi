@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SchoolApi.Application.DTOs.Group;
 using SchoolApi.Application.DTOs.Teacher;
 using SchoolApi.Application.Interfaces;
 using SchoolApi.DataInfrastructure.Context;
@@ -11,33 +12,23 @@ namespace SchoolApi.Application.Services
     {
         private readonly IGenericRepositoryAsync<Teacher> _teacherRepository;
         private readonly IMapper _mapper;
-        private readonly ApplicationDbContext db;
+        private readonly ApplicationDbContext _db;
 
         public TeacherServise(IGenericRepositoryAsync<Teacher> teacherRepository,
             IMapper mapper)
         {
             _teacherRepository = teacherRepository;
-            _mapper = mapper;        
+            _mapper = mapper;
         }
 
         public async Task<TeacherDto> AddTeacherAsync(TeacherForCreationDto teacherForCreationDto)
         {
-            #region DTO
-           /* // this DTO model map entity
+                   
+
             var teacher = _mapper.Map<Teacher>(teacherForCreationDto);
-            // if Id==0 Add from DB else Update entity
-            if (teacher.Id == 3)
-            {
-                await _teacherRepository.AddAsync(teacher);
-            }
-            else
-            {
-                await _teacherRepository.UpdateAsync(teacher);
-            }
-            return _mapper.Map<TeacherDto>(teacher);*/
-            #endregion
-            var teacher = _mapper.Map<Teacher>(teacherForCreationDto);
+    
             return _mapper.Map<TeacherDto>(await _teacherRepository.AddAsync(teacher));
+
         }
         public async Task<IReadOnlyList<TeacherDto>> GetAllTeacherAsync()
         {
@@ -49,15 +40,14 @@ namespace SchoolApi.Application.Services
             return _mapper.Map<TeacherDto>(await _teacherRepository.GetByIdAsync(id));
         }
 
-        public async Task UpdateTeacherAsync(TeacherForCreationDto teacherForCreationDto)
-        {           
-            var teacher=_mapper.Map<Teacher>(teacherForCreationDto);
-               await _teacherRepository.UpdateAsync(teacher);                    
-        }
-        public async Task DeleteTeacherAsync(TeacherForCreationDto teacherForCreationDto)
+        public async Task UpdateTeacherAsync(TeacherUpdate teacherUpdate)
         {
-            var teacher = _mapper.Map<Teacher>(teacherForCreationDto);
-            await _teacherRepository.DeleteAsync(teacher);
+            var teacher = _mapper.Map<Teacher>(teacherUpdate);
+            await _teacherRepository.UpdateAsync(teacher);
+        }
+        public async Task DeleteTeacherAsync(int id)
+        {           
+            await _teacherRepository.DeleteAsync(await _teacherRepository.GetByIdAsync(id));
         }
     }
 }

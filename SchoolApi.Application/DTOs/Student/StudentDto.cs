@@ -9,5 +9,7 @@ namespace SchoolApi.Application.DTOs.Student
     public class StudentDto:StudentForCreationDto
     {
         public int Id { get; set; }
+
+        
     }
 }
