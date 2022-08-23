@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchoolApi.Application.DTOs.Teacher;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,6 @@ namespace SchoolApi.Application.DTOs.Group
     public class GroupForCreationDto
     {
         public string GroupName { get; set; }
+
     }
 }

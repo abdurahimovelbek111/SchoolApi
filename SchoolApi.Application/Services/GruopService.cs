@@ -18,7 +18,21 @@ namespace SchoolApi.Application.Services
         }
         public async Task<GroupDto> AddGroupAsync(GroupForCreationDto groupForCreationDto)
         {
-            var group=_mapper.Map<Group>(groupForCreationDto);
+            #region DTO
+            /* // this DTO model map entity
+             var group = _mapper.Map<Group>(groupForCreationDto);
+             // if Id==0 Add from DB else Update entity
+             if (group.Id == 0)
+             {
+                 await _gruopRepository.AddAsync(group);
+             }
+             else
+             {
+                 await _gruopRepository.UpdateAsync(group);
+             }
+             return _mapper.Map<GroupDto>(group);*/
+            #endregion
+            var group = _mapper.Map<Group>(groupForCreationDto);
             return _mapper.Map<GroupDto>(await _gruopRepository.AddAsync(group));
         }
 

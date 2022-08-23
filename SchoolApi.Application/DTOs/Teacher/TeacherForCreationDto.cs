@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SchoolApi.Application.DTOs.Group;
 
 namespace SchoolApi.Application.DTOs.Teacher
 {
@@ -15,5 +11,6 @@ namespace SchoolApi.Application.DTOs.Teacher
         public string Phone { get; set; }
         public string Address { get; set; }
         public string Degree { get; set; }
+        public List<GroupForCreationDto> Groups { get; set; }
     }
 }

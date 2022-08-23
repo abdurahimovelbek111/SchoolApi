@@ -31,7 +31,7 @@ namespace SchoolApi.Controllers
         {
             return Created("", await _teacherServie.AddTeacherAsync(teacherForCreationDto));
         }
-        [HttpPatch]
+        [HttpPatch]        
         public async Task UpdateTeacherAsync([FromBody] TeacherForCreationDto teacherForCreationDto)
         {
             await _teacherServie.UpdateTeacherAsync(teacherForCreationDto);
