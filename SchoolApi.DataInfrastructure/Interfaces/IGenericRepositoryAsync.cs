@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SchoolApi.Domain.Entity;
 
 namespace SchoolApi.DataInfrastructure.Interfaces
 {
     public interface IGenericRepositoryAsync<T> 
-        where T : class
+        where T : BaseEntity
     {        
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> GetAllAsync();
         Task<IReadOnlyList<T>> GetPageListAsync(int pageNumbers, int pageSize);
         Task<T> AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
+        Task<int> AddRangeAsync(IEnumerable<T> entitys);
+        Task<bool> UpdateAsync(T entity);
+        Task<int> UpdateRangeAsync(IEnumerable<T> entitys);
+        Task<bool> DeleteAsync(T entity);
     }
 }

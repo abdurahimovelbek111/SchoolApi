@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using SchoolApi.Application.Interfaces;
 using SchoolApi.Application.Profiles;
-using SchoolApi.Application.Services;
+using SchoolApi.Application.ServiceGroup;
+using SchoolApi.Application.ServiceStudent;
+using SchoolApi.Application.ServiceTeacher;
 
 namespace SchoolApi.Application.Extensions
 {
@@ -10,9 +11,9 @@ namespace SchoolApi.Application.Extensions
         public static void AddApplicationLayer(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(MappingInitializer));
-            services.AddTransient<IStudentServie, StudentService>();
-            services.AddTransient<ITeacherServise,TeacherServise>();
-            services.AddTransient<IGroupService, GruopService>();
+            services.AddTransient<IStudentService, StudentService>();
+            services.AddTransient<ITeacherService,TeacherService>();
+            services.AddTransient<IGroupService, GroupService>();
         }
     }
 }

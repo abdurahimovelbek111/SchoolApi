@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SchoolApi.Application.DTOs.Student;
-using SchoolApi.Application.Interfaces;
-using SchoolApi.Domain.Models;
+using SchoolApi.Application.DTOs;
+using SchoolApi.Application.ServiceStudent;
 
 namespace SchoolApi.Controllers
 {
@@ -9,37 +8,37 @@ namespace SchoolApi.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly IStudentServie _studentServie;
+        private readonly IStudentService _studentService;
 
-        public StudentController(IStudentServie studentServie)
+        public StudentController(IStudentService studentService)
         {
-            _studentServie = studentServie;
+            _studentService = studentService;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllStudentsAsync()
         {
-            return Ok(await _studentServie.GetAllStudentAsync());
+            return Ok(await _studentService.GetAll());
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetStudentByIdAsyncss(int id)
         {
-            return Ok(await _studentServie.GetStudentByIdAsync(id));
+            return Ok(await _studentService.Get(id));
         }
 
         [HttpPost()]
-        public async Task<IActionResult> AddStudentAsync([FromBody] StudentForCreationDto studentForCreationDto)
+        public async Task<IActionResult> AddStudentAsync([FromBody] StudentDto studentDto)
         {
-            return Created("", await _studentServie.AddStudentAsync(studentForCreationDto));
+            return Created("", await _studentService.AddStudentAsync(studentDto));
         }
         [HttpPatch]
-        public async Task UpdateStudentAsync([FromBody] StudentUpdate studentUpdate)
+        public async Task UpdateStudentAsync([FromBody] StudentDto studentDto)
         {
-            await _studentServie.UpdateStudentAsync(studentUpdate);   
+            await _studentService.onSaveOrUpdate(studentDto);   
         }
         [HttpDelete("{id}")]
         public async Task DeleteStudentAsync(int id)
         {
-           await _studentServie.DeleteStudentAsync(id);            
+           await _studentService.Delete(id);            
         }
     }
 }

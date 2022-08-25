@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolApi.DataInfrastructure.Context;
 using SchoolApi.DataInfrastructure.Interfaces;
+using SchoolApi.Domain.Entity;
 
 namespace SchoolApi.DataInfrastructure.Repositories
 {
     public class GenericRepositoryAsync<T>: IGenericRepositoryAsync<T>
-        where T:class
+        where T: BaseEntity
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -13,8 +14,7 @@ namespace SchoolApi.DataInfrastructure.Repositories
         {
             _dbContext = dbContext;
         }
-
-
+       
         public virtual async Task<T> AddAsync(T entity)
         {
             await _dbContext.Set<T>().AddAsync(entity);
@@ -22,17 +22,22 @@ namespace SchoolApi.DataInfrastructure.Repositories
             return entity;
         }
 
-        public virtual async Task DeleteAsync(T entity)
+        public Task<int> AddRangeAsync(IEnumerable<T> entitys)
         {
-            _dbContext.Set<T>().Remove(entity);
-            await _dbContext.SaveChangesAsync();
+            throw new NotImplementedException();
         }
-        
+
+        public virtual async Task<bool> DeleteAsync(T entity)
+        {
+            entity.Active = false;
+            entity.ModifDate = DateTime.Now;
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            return (await _dbContext.SaveChangesAsync())>0?true:false;
+        }        
         public virtual async Task<IReadOnlyList<T>> GetAllAsync()
         {
             return await _dbContext.Set<T>().ToListAsync();
         }
-
         public virtual async Task<T> GetByIdAsync(int id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
@@ -47,11 +52,15 @@ namespace SchoolApi.DataInfrastructure.Repositories
                  .ToListAsync();
         }
 
-        public virtual async Task UpdateAsync(T entity)
+        public virtual async Task<bool> UpdateAsync(T entity)
         {           
            _dbContext.Entry(entity).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
+           return  await _dbContext.SaveChangesAsync()>0?true:false;
         }
-        
+
+        public virtual async Task<int> UpdateRangeAsync(IEnumerable<T> entitys)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
