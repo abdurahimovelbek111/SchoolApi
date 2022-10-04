@@ -2,11 +2,10 @@
 using SchoolApi.Application.DTOs;
 using SchoolApi.Application.ServiceStudent;
 
+
 namespace SchoolApi.Controllers
 {
-    [Route("api/student")]
-    [ApiController]
-    public class StudentController : ControllerBase
+    public class StudentController : BaseController
     {
         private readonly IStudentService _studentService;
 
@@ -28,17 +27,17 @@ namespace SchoolApi.Controllers
         [HttpPost()]
         public async Task<IActionResult> AddStudentAsync([FromBody] StudentDto studentDto)
         {
-            return Created("", await _studentService.AddStudentAsync(studentDto));
+            return Created("", await _studentService.onSaveOrUpdate(studentDto,CurrentUser));
         }
         [HttpPatch]
         public async Task UpdateStudentAsync([FromBody] StudentDto studentDto)
         {
-            await _studentService.onSaveOrUpdate(studentDto);   
+            await _studentService.onSaveOrUpdate(studentDto, CurrentUser);   
         }
         [HttpDelete("{id}")]
         public async Task DeleteStudentAsync(int id)
         {
-           await _studentService.Delete(id);            
+           await _studentService.Delete(id, CurrentUser);            
         }
     }
 }

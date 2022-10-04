@@ -16,24 +16,14 @@ namespace SchoolApi.Application.ServiceStudent
         {
             _repositoryAsync = repositoryAsync;
             _mapper = mapper;
-        }
-        /// <summary>
-        ///StudentDto  add
-        /// </summary>
-        /// <param name="studentDto"></param>
-        /// <returns></returns>
-        public async Task<StudentDto> AddStudentAsync(StudentDto studentDto)
-        {
-            var student = _mapper.Map<Student>(studentDto);
-            return _mapper.Map<StudentDto>(await _repositoryAsync.AddAsync(student));
-        }
+        }     
 
         /// <summary>
         /// Delete enetity by Id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Response> Delete(int id)
+        public async Task<Response> Delete(int id, UserProfile user)
         {
             // find entity form DB
             var findDeleteEntity = await _repositoryAsync.GetByIdAsync(id);
@@ -47,6 +37,8 @@ namespace SchoolApi.Application.ServiceStudent
             else
             {
                 // Is Update Db
+                findDeleteEntity.ModifDate = DateTime.Now;
+                findDeleteEntity.ModifBy = user.Id;
                 bool isUpdate = await _repositoryAsync.DeleteAsync(findDeleteEntity);
                 if (isUpdate) return new Response()
                 {
@@ -80,31 +72,43 @@ namespace SchoolApi.Application.ServiceStudent
         /// <returns></returns>
         public async Task<IEnumerable<StudentDto>> GetAll()
         {
+           
             return _mapper.Map<IEnumerable<StudentDto>>(await _repositoryAsync.GetAllAsync());
         }
 
         /// <summary>
-        /// StudentDto on Save Update 
+        /// StudentDto on Save Update and Add
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task<Response> onSaveOrUpdate(StudentDto entity)
+        public async Task<Response> onSaveOrUpdate(StudentDto entity, UserProfile user)
         {
             var student = _mapper.Map<Student>(entity);
-            if (student == null) return new Response()
+            if (student.Id == 0)
             {
-                Message = "",
-                Status = Status.NotAllowed,
-                Label = ""
-            };
+                Console.WriteLine();
+                // Add
+                return (await _repositoryAsync.AddAsync(student)).Id > 0
+                    ? new Response() { Message = "Add", Status = Status.Ok }
+                    : new Response() { Message = "Error", Status = Status.BadRequest };
+            }
             else
-                _mapper.Map<Student>(await _repositoryAsync.UpdateAsync(student));
-            return new Response()
             {
-                Message = "Update database",
-                Status = Status.Created,
-                Label = ""
-            };
-        }
+                var findDb = await _repositoryAsync.GetByIdAsync(student.Id);
+                if (findDb == null) return new Response() { Message = "Id bo'yicha DB ma'lumot yo'q", Status = Status.NotAllowed };
+                else
+                {
+                    student.UpdateEntity(user, findDb.CreateBy, findDb.CreateDate);
+
+                    return await _repositoryAsync.UpdateAsync(student)
+                     ? new Response()
+                     {
+                         Message = "Update bo'ldi",
+                         Status = Status.Accepted
+                     }
+                     : new Response();
+                }
+            }
+        }    
     }
 }

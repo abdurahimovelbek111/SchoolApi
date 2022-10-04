@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using SchoolApi.Application.DTOs;
 using SchoolApi.Application.ServiceGroup;
+using SchoolApi.Domain.ModelView;
 
 namespace SchoolApi.Controllers
 {
-    [Route("api/group")]
-    [ApiController]
-    public class GroupController : ControllerBase
+    /// <summary>
+    /// This controller sad
+    /// </summary>
+    public class GroupController : BaseController
     {
         private readonly IGroupService _groupService;
 
@@ -22,24 +24,22 @@ namespace SchoolApi.Controllers
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetGroupByIdAsyncss(int id)
-        {
-            return Ok(await _groupService.Get(id));
-        }
+            => Ok(await _groupService.Get(id));
 
         [HttpPost()]
-        public async Task<IActionResult> AddStudentAsync([FromBody] GroupDto groupDto)
+        public async Task<IActionResult> AddGroupAsync([FromBody] GroupDto groupDto)
         {
-            return Created("", await _groupService.AddGroupAsync(groupDto));
+            return Created("", await _groupService.onSaveOrUpdate(groupDto, CurrentUser));
         }
         [HttpPatch]
-        public async Task UpdateStudentAsync([FromBody] GroupDto groupDto)
+        public async Task UpdateGroupAsync([FromBody] GroupDto groupDto)
         {
-            await _groupService.onSaveOrUpdate(groupDto);
+            await _groupService.onSaveOrUpdate(groupDto, CurrentUser);
         }
         [HttpDelete("{id}")]
-        public async Task DeleteStudentAsync(int id)
+        public async Task DeleteGroupAsync(int id)
         {           
-            await _groupService.Delete(id);
+            await _groupService.Delete(id, CurrentUser);
         }
     }
 }
